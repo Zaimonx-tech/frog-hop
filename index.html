@@ -12,11 +12,11 @@
   --bg:#030712;--accent:#f7931a;--accent2:#627eea;--safe:#00e676;
   --danger:#ff1744;--coin:#f7931a;--purple:#a855f7;--cyan:#06b6d4;
 }
-body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;}
+body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;position:relative;}
 
 /* SCREENS */
-.screen{position:absolute;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .35s,transform .35s;}
-.screen.hidden{opacity:0;pointer-events:none;transform:scale(.96);}
+.screen{position:absolute;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .25s;}
+.screen.hidden{opacity:0;pointer-events:none;}
 
 /* START */
 #startScreen{background:radial-gradient(ellipse at 50% 30%,#0a0f1e 0%,#030712 70%);}
@@ -151,21 +151,21 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
 ══════════════════════════════ */
 #authScreen{
   background:radial-gradient(ellipse at 40% 30%,#0d1433 0%,#030712 70%);
-  overflow-y:auto;padding:20px 16px;
+  overflow-y:auto;padding:12px 16px;
 }
 .auth-logo{
   font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.6rem,8vw,2.8rem);
   background:linear-gradient(135deg,#f7931a,#627eea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
   margin-bottom:4px;text-align:center;
 }
-.auth-frog{font-size:3.5rem;animation:heroHop 1.4s ease-in-out infinite;margin-bottom:6px;}
-.auth-sub{font-size:.75rem;letter-spacing:3px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:28px;}
+.auth-frog{font-size:3rem;animation:heroHop 1.4s ease-in-out infinite;margin-bottom:4px;}
+.auth-sub{font-size:.72rem;letter-spacing:3px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:16px;}
 
 .auth-card{
   width:100%;max-width:380px;
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.1);
-  border-radius:20px;padding:28px 24px;
+  border-radius:20px;padding:20px 20px;
   backdrop-filter:blur(20px);
   position:relative;z-index:2;
 }
@@ -180,7 +180,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
 .auth-section{display:none;}
 .auth-section.active{display:block;}
 
-.input-group{margin-bottom:16px;}
+.input-group{margin-bottom:12px;}
 .input-label{
   font-size:.72rem;letter-spacing:2px;color:rgba(255,255,255,.5);
   text-transform:uppercase;font-family:'Orbitron',monospace;
@@ -334,6 +334,42 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
 .wallet-amount{font-family:'Orbitron',monospace;font-size:.95rem;color:var(--accent);font-weight:900;}
 
 .dash-actions{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+
+/* My Frogs collection on dashboard */
+.my-frogs-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));
+  gap:8px;margin-bottom:18px;
+}
+.my-frog-chip{
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;
+  transition:all .18s;position:relative;
+}
+.my-frog-chip.active{
+  border-color:#00e676;background:rgba(0,230,118,.12);
+  box-shadow:0 0 14px rgba(0,230,118,.3);
+}
+.my-frog-chip:hover{border-color:rgba(247,147,26,.5);background:rgba(247,147,26,.07);}
+.my-frog-chip-emoji{font-size:1.8rem;display:block;line-height:1;margin-bottom:3px;}
+.my-frog-chip-name{font-size:.5rem;font-family:'Orbitron',monospace;color:rgba(255,255,255,.6);
+  font-weight:700;line-height:1.2;word-break:break-word;}
+.my-frog-chip-mult{font-size:.55rem;font-family:'Orbitron',monospace;color:#f7931a;font-weight:900;margin-top:2px;}
+.my-frog-active-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:#00e676;color:#000;font-size:.4rem;
+  font-family:'Orbitron',monospace;font-weight:900;
+  padding:1px 4px;border-radius:6px;letter-spacing:.5px;
+}
+.active-frog-banner{
+  background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);
+  border-radius:12px;padding:12px 14px;margin-bottom:14px;
+  display:flex;align-items:center;gap:12px;
+}
+.active-frog-emoji{font-size:2.2rem;}
+.active-frog-info{flex:1;}
+.active-frog-name{font-family:'Orbitron',monospace;font-size:.8rem;font-weight:900;color:#fff;margin-bottom:2px;}
+.active-frog-mult{font-family:'Orbitron',monospace;font-size:.75rem;color:#f7931a;font-weight:900;}
+.active-frog-desc{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:1px;}
 .dash-btn{
   width:100%;padding:14px;font-family:'Orbitron',monospace;font-size:.95rem;font-weight:700;
   letter-spacing:1px;border:none;border-radius:12px;cursor:pointer;transition:all .18s;
@@ -461,6 +497,62 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   background:rgba(255,50,50,.2);color:#ff6666;border:1px solid rgba(255,50,50,.4);
   border-radius:6px;padding:1px 6px;letter-spacing:.5px;
 }
+/* Admin frog collection manager */
+.admin-frogs-section{
+  margin-top:12px;border-top:1px solid rgba(255,255,255,.08);padding-top:12px;
+}
+.admin-frogs-title{
+  font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;
+  color:rgba(255,100,100,.7);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.admin-frog-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));
+  gap:6px;max-height:220px;overflow-y:auto;padding:4px 2px;
+}
+.admin-frog-tile{
+  border:1.5px solid rgba(255,255,255,.1);border-radius:10px;
+  padding:6px 3px;text-align:center;cursor:pointer;
+  transition:all .15s;position:relative;background:rgba(255,255,255,.03);
+}
+.admin-frog-tile.owned{
+  border-color:rgba(0,230,118,.5);background:rgba(0,230,118,.1);
+}
+.admin-frog-tile.equipped-frog{
+  border-color:#f7931a;background:rgba(247,147,26,.12);
+  box-shadow:0 0 10px rgba(247,147,26,.3);
+}
+.admin-frog-tile:hover{border-color:rgba(255,100,100,.5);background:rgba(255,100,100,.08);}
+.admin-frog-tile-emoji{font-size:1.4rem;display:block;line-height:1.2;}
+.admin-frog-tile-name{font-size:.45rem;font-family:'Orbitron',monospace;
+  color:rgba(255,255,255,.5);font-weight:700;margin-top:2px;word-break:break-word;}
+.admin-frog-tile-price{font-size:.42rem;color:rgba(247,147,26,.6);font-family:'Orbitron',monospace;}
+.admin-frog-owned-dot{
+  position:absolute;top:3px;right:3px;width:7px;height:7px;
+  border-radius:50%;background:#00e676;
+}
+.admin-frog-equipped-dot{
+  position:absolute;top:3px;left:3px;
+  font-size:.4rem;font-family:'Orbitron',monospace;color:#f7931a;font-weight:900;
+}
+.admin-frog-legend{
+  display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;
+  font-size:.6rem;color:rgba(255,255,255,.35);font-family:'Orbitron',monospace;
+}
+.admin-frog-legend span{display:flex;align-items:center;gap:4px;}
+.admin-equipped-selector{
+  margin-top:8px;
+}
+.admin-equipped-selector label{
+  font-family:'Orbitron',monospace;font-size:.62rem;color:rgba(255,100,100,.7);
+  text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:4px;
+}
+.admin-equipped-selector select{
+  width:100%;padding:8px 10px;background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(255,100,100,.25);border-radius:8px;
+  color:#fff;font-family:'Exo 2',sans-serif;font-size:.85rem;outline:none;
+}
+.admin-equipped-selector select option{background:#1a0a0a;color:#fff;}
 
 /* loading spinner */
 .spinner{
@@ -531,6 +623,44 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   animation:multPulse 2s ease-in-out infinite;
 }
 @keyframes multPulse{0%,100%{box-shadow:0 0 4px rgba(247,147,26,.3);}50%{box-shadow:0 0 12px rgba(247,147,26,.7);}}
+
+/* Buy confirm modal */
+#buyConfirmModal{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(14px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+#buyConfirmModal.open{opacity:1;pointer-events:all;}
+.buy-modal-box{
+  background:#0d1a0d;border:2px solid rgba(247,147,26,.4);
+  border-radius:20px;padding:28px 24px;max-width:320px;width:90%;
+  text-align:center;box-shadow:0 0 40px rgba(247,147,26,.2);
+}
+.buy-modal-emoji{font-size:3rem;margin-bottom:8px;display:block;}
+.buy-modal-title{font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;
+  color:#fff;margin-bottom:6px;}
+.buy-modal-price{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;
+  color:#f7931a;margin-bottom:4px;}
+.buy-modal-balance{font-size:.75rem;color:rgba(255,255,255,.45);
+  font-family:'Orbitron',monospace;margin-bottom:20px;}
+.buy-modal-mult{font-family:'Orbitron',monospace;font-size:.75rem;color:#00e676;
+  background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);
+  border-radius:8px;padding:4px 12px;display:inline-block;margin-bottom:18px;}
+.buy-modal-btns{display:flex;gap:10px;}
+.buy-modal-confirm{
+  flex:1;padding:13px;font-family:'Orbitron',monospace;font-size:.9rem;font-weight:900;
+  border:none;border-radius:12px;cursor:pointer;
+  background:linear-gradient(135deg,#f7931a,#e67e00);color:#000;
+  box-shadow:0 4px 20px rgba(247,147,26,.45);letter-spacing:1px;
+}
+.buy-modal-confirm:active{transform:scale(.95);}
+.buy-modal-cancel{
+  padding:13px 18px;font-family:'Orbitron',monospace;font-size:.85rem;font-weight:700;
+  border:1.5px solid rgba(255,255,255,.15);border-radius:12px;cursor:pointer;
+  background:transparent;color:rgba(255,255,255,.5);
+}
+.buy-modal-cancel:active{background:rgba(255,255,255,.08);}
 </style>
 </head>
 <body>
@@ -661,6 +791,20 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   <p style="color:rgba(255,255,255,.2);font-size:.65rem;margin-top:14px;text-align:center;position:relative;z-index:2;">
     Your data is stored locally on this device.<br>All accounts are private and secure.
   </p>
+
+  <button onclick="openAdminLogin()" style="
+    margin-top:16px;position:relative;z-index:2;
+    background:rgba(255,40,40,.12);
+    border:1.5px solid rgba(255,50,50,.35);
+    color:#ff6666;
+    font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;
+    letter-spacing:2px;padding:10px 28px;border-radius:50px;
+    cursor:pointer;transition:all .2s;
+    box-shadow:0 0 16px rgba(255,40,40,.15);
+  "
+  onmouseover="this.style.background='rgba(255,40,40,.22)';this.style.boxShadow='0 0 24px rgba(255,40,40,.35)'"
+  onmouseout="this.style.background='rgba(255,40,40,.12)';this.style.boxShadow='0 0 16px rgba(255,40,40,.15)'"
+  >🔐 ADMIN PANEL</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -761,6 +905,19 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
     <div class="dash-section-title">🏆 ACHIEVEMENTS</div>
     <div class="dash-achievements" id="achievementsGrid"></div>
 
+    <!-- My Frogs Collection -->
+    <div class="dash-section-title">🐸 MY FROG COLLECTION</div>
+    <div id="dashActiveFrogBanner" class="active-frog-banner">
+      <div class="active-frog-emoji" id="dashActiveFrogEmoji">🐸</div>
+      <div class="active-frog-info">
+        <div class="active-frog-name" id="dashActiveFrogName">Classic Frog</div>
+        <div class="active-frog-mult" id="dashActiveFrogMult">×1 Score Multiplier</div>
+        <div class="active-frog-desc" id="dashActiveFrogDesc">Tap any frog below to equip</div>
+      </div>
+    </div>
+    <div class="my-frogs-grid" id="dashFrogsGrid"></div>
+    <button class="dash-btn dash-btn-outline" style="margin-bottom:14px;border-color:rgba(247,147,26,.35);color:#f7931a" onclick="openStore()">🛒 BUY MORE FROGS</button>
+
     <!-- Action Buttons -->
     <div class="dash-actions">
       <button class="dash-btn dash-btn-play" onclick="startGame(1)">▶ NEW GAME</button>
@@ -797,7 +954,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   <button class="btn btn-secondary" onclick="openStore()">🐸 Frog Store</button>
   <button class="btn btn-secondary" onclick="showScreen('dashboardScreen');renderDashboard()">👤 My Dashboard</button>
   <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 Leaderboard</button>
-  <div onclick="adminTapCount()" style="color:rgba(255,255,255,.08);font-size:.55rem;margin-top:8px;cursor:pointer;font-family:'Orbitron',monospace;letter-spacing:2px;user-select:none">⚙</div>
+
 </div>
 
 <!-- ══ GAME ══ -->
@@ -806,6 +963,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
     <div class="hud-item">🪙<span id="cryptoDisplay">0</span></div>
     <div class="hud-item">🎯<span id="levelDisplay">Lv.1</span></div>
     <div class="hud-item" style="color:#ffd700;font-weight:900">🪙<span id="coinCounter" style="font-family:'Orbitron',monospace">0/0</span></div>
+    <div class="hud-item"><span id="frogHudBadge" style="font-family:'Orbitron',monospace;font-size:.85rem">🐸</span></div>
     <div class="hud-item">❤️<span id="livesDisplay">3</span></div>
     <div class="hud-item">🔥<span id="comboDisplay">x1</span></div>
     <canvas id="timerArc"></canvas>
@@ -933,6 +1091,21 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   <div class="lb-title">🏆 LEADERBOARD</div>
   <div class="lb-list" id="lbList"></div>
   <button class="btn btn-secondary" style="margin-top:18px" onclick="goMenu()">← Back</button>
+</div>
+
+<!-- Buy Confirm Modal -->
+<div id="buyConfirmModal">
+  <div class="buy-modal-box">
+    <span class="buy-modal-emoji" id="bmEmoji">🐸</span>
+    <div class="buy-modal-title" id="bmTitle">Buy Frog?</div>
+    <div class="buy-modal-price" id="bmPrice">50₿</div>
+    <div id="bmMult" class="buy-modal-mult" style="display:none"></div>
+    <div class="buy-modal-balance" id="bmBalance">Balance: 0.0000₿</div>
+    <div class="buy-modal-btns">
+      <button class="buy-modal-cancel" onclick="closeBuyModal()">CANCEL</button>
+      <button class="buy-modal-confirm" id="bmConfirmBtn" onclick="confirmBuyFrog()">BUY NOW ✓</button>
+    </div>
+  </div>
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -1246,7 +1419,14 @@ function initLevel(lvl){
   document.getElementById('comboDisplay').textContent='x1';
   document.getElementById('coinCounter').textContent='0/'+GS.totalCoins;
   const hudMult=getEquippedMultiplier();
-  document.getElementById('cryptoDisplay').textContent=(PD.cryptoBalance||0).toFixed(4)+'₿'+(hudMult>1?' ×'+hudMult:'');
+  const hudFrog=FROG_STORE_CHARS[PD.equippedFrog||0]||FROG_STORE_CHARS[0];
+  document.getElementById('cryptoDisplay').textContent=(PD.cryptoBalance||0).toFixed(4)+'₿';
+  // Update frog HUD badge
+  const frogHudEl=document.getElementById('frogHudBadge');
+  if(frogHudEl){
+    frogHudEl.textContent=hudFrog.emoji+(hudMult>1?' ×'+hudMult:'');
+    frogHudEl.style.color=hudMult>1?'#f7931a':'rgba(255,255,255,.6)';
+  }
   document.getElementById('hintBar').textContent='⚠️ Collect ALL '+GS.totalCoins+' coin'+(GS.totalCoins!==1?'s':'')+'  to pass! Missing any = 90% score & crypto penalty!';
   document.getElementById('levelProgBar').style.width=(((lvl-1)/100)*100)+'%';
   document.getElementById('dangerVig').classList.remove('on');
@@ -1454,7 +1634,9 @@ function showDeathScrn(){
 
   // Update live displays
   const frogMult=getEquippedMultiplier();
-  document.getElementById('cryptoDisplay').textContent=newBalance.toFixed(4)+'₿'+(frogMult>1?' ×'+frogMult:'');
+  document.getElementById('cryptoDisplay').textContent=newBalance.toFixed(4)+'₿';
+  const frogHudD=document.getElementById('frogHudBadge');
+  if(frogHudD){const fdg=FROG_STORE_CHARS[PD.equippedFrog||0]||FROG_STORE_CHARS[0];frogHudD.textContent=fdg.emoji+(frogMult>1?' ×'+frogMult:'');frogHudD.style.color=frogMult>1?'#f7931a':'rgba(255,255,255,.6)';}
   document.getElementById('statBest').textContent=PD.bestScore.toLocaleString();
   document.getElementById('statCoins').textContent=newBalance.toFixed(4)+'₿';
   const dsScore=document.getElementById('ds_score');if(dsScore)dsScore.textContent=PD.bestScore.toLocaleString();
@@ -1572,7 +1754,9 @@ function completeLevel(){
   const newCrypto=multipliedTotal/100000;
   PD.cryptoEarned=(PD.cryptoEarned||0)+newCrypto;
   PD.cryptoBalance=(PD.cryptoBalance||0)+newCrypto;
-  document.getElementById('cryptoDisplay').textContent=(PD.cryptoBalance||0).toFixed(4)+'₿'+(frogMult>1?' ×'+frogMult:'');
+  document.getElementById('cryptoDisplay').textContent=(PD.cryptoBalance||0).toFixed(4)+'₿';
+  const frogHudAfter=document.getElementById('frogHudBadge');
+  if(frogHudAfter){const fc=FROG_STORE_CHARS[PD.equippedFrog||0]||FROG_STORE_CHARS[0];frogHudAfter.textContent=fc.emoji+(frogMult>1?' ×'+frogMult:'');frogHudAfter.style.color=frogMult>1?'#f7931a':'rgba(255,255,255,.6)';}
   savePD();
 
   if(lvl>=100){document.getElementById('win_score').textContent=currentScore.toLocaleString();document.getElementById('winScreen').classList.remove('hidden');spawnFx('🏆',25);return;}
@@ -2372,6 +2556,48 @@ function renderDashboard(){
 
   // Continue button
   document.getElementById('contLvl').textContent=p.maxLevel;
+
+  // My Frogs Collection
+  renderDashboardFrogs();
+}
+
+function renderDashboardFrogs(){
+  const p=PD;
+  const owned=p.ownedFrogs||[0];
+  const equipped=p.equippedFrog||0;
+  const grid=document.getElementById('dashFrogsGrid');
+  if(!grid)return;
+  grid.innerHTML='';
+
+  // Active frog banner
+  const activeFrog=FROG_STORE_CHARS[equipped]||FROG_STORE_CHARS[0];
+  const activeMult=getFrogMultiplier(equipped);
+  document.getElementById('dashActiveFrogEmoji').textContent=activeFrog.emoji;
+  document.getElementById('dashActiveFrogName').textContent=activeFrog.name;
+  document.getElementById('dashActiveFrogMult').textContent='×'+activeMult+' Score Multiplier'+(activeMult>1?' 🔥':'');
+  document.getElementById('dashActiveFrogDesc').textContent=activeFrog.desc;
+
+  // Render owned frogs
+  owned.forEach(id=>{
+    const frog=FROG_STORE_CHARS[id];
+    if(!frog)return;
+    const mult=getFrogMultiplier(id);
+    const isEquipped=id===equipped;
+    const chip=document.createElement('div');
+    chip.className='my-frog-chip'+(isEquipped?' active':'');
+    chip.innerHTML=`
+      ${isEquipped?'<div class="my-frog-active-badge">ON</div>':''}
+      <span class="my-frog-chip-emoji">${frog.emoji}</span>
+      <div class="my-frog-chip-name">${frog.name}</div>
+      <div class="my-frog-chip-mult">${mult>1?'×'+mult:' '}</div>`;
+    chip.onclick=()=>{
+      PD.equippedFrog=id;
+      savePD();
+      renderDashboardFrogs();
+      toast(frog.emoji+' '+frog.name+' equipped!'+(mult>1?' ×'+mult+' score bonus!':''));
+    };
+    grid.appendChild(chip);
+  });
 }
 
 // ── RESET PROGRESS ──
@@ -2506,25 +2732,79 @@ function renderStore(){
   });
 }
 
+// Pending buy state
+let _pendingBuyFrog=null;
+
 function handleFrogCardClick(frog,price,isOwned,isEquipped){
-  if(isEquipped){toast('Already equipped!');return;}
+  if(isEquipped){toast(frog.emoji+' Already equipped!');return;}
   if(isOwned){
+    // Just equip — no payment needed
     PD.equippedFrog=frog.id;
-    savePD();renderStore();toast('🐸 Equipped '+frog.name+'!');return;
+    savePD();renderStore();
+    if(typeof renderDashboardFrogs==='function')renderDashboardFrogs();
+    const mult=getFrogMultiplier(frog.id);
+    toast('🐸 '+frog.name+' equipped!'+(mult>1?' ×'+mult+' active!':''));
+    return;
   }
-  // Buy
+  // Not owned — check balance then show buy modal
   const balance=PD.cryptoBalance||0;
-  if(balance<price){toast('❌ Not enough crypto! Need '+price+'₿');return;}
-  if(price>0&&!confirm(`Buy ${frog.name} for ${price}₿?`))return;
-  PD.cryptoBalance=(balance-price);
+  if(balance<price){
+    toast('❌ Need '+price+'₿ · You have '+balance.toFixed(4)+'₿');
+    return;
+  }
+  // Show custom buy modal (no confirm() — works everywhere)
+  openBuyModal(frog,price,balance);
+}
+
+function openBuyModal(frog,price,balance){
+  _pendingBuyFrog={frog,price};
+  document.getElementById('bmEmoji').textContent=frog.emoji;
+  document.getElementById('bmTitle').textContent='Buy '+frog.name+'?';
+  document.getElementById('bmPrice').textContent=price+'₿';
+  document.getElementById('bmBalance').textContent='Your balance: '+balance.toFixed(4)+'₿  →  '+(balance-price).toFixed(4)+'₿ after';
+  const mult=getFrogMultiplier(frog.id);
+  const multEl=document.getElementById('bmMult');
+  if(mult>1){
+    multEl.textContent='🔥 ×'+mult+' Score Multiplier Bonus!';
+    multEl.style.display='inline-block';
+  } else {
+    multEl.style.display='none';
+  }
+  document.getElementById('buyConfirmModal').classList.add('open');
+}
+
+function closeBuyModal(){
+  _pendingBuyFrog=null;
+  document.getElementById('buyConfirmModal').classList.remove('open');
+}
+
+function confirmBuyFrog(){
+  if(!_pendingBuyFrog)return;
+  const {frog,price}=_pendingBuyFrog;
+  closeBuyModal();
+
+  const balance=PD.cryptoBalance||0;
+  if(balance<price){toast('❌ Insufficient balance!');return;}
+
+  // Deduct and add to owned
+  PD.cryptoBalance=parseFloat((balance-price).toFixed(6));
   if(!PD.ownedFrogs)PD.ownedFrogs=[0];
-  PD.ownedFrogs.push(frog.id);
+  if(!PD.ownedFrogs.includes(frog.id))PD.ownedFrogs.push(frog.id);
   PD.equippedFrog=frog.id;
-  savePD();renderStore();
+
+  savePD();
+  renderStore();
+
+  // Update all balance displays
+  document.getElementById('storeBalance').textContent=PD.cryptoBalance.toFixed(4);
+  const dsCoins=document.getElementById('ds_coins');
+  if(dsCoins)dsCoins.textContent=PD.cryptoBalance.toFixed(4)+'₿';
+
   const newMult=getFrogMultiplier(frog.id);
-  const multMsg=newMult>1?' Score ×'+newMult+' active!':'';
-  toast('🎉 Bought & equipped '+frog.name+'!'+multMsg);
-  spawnFx(frog.emoji,10);
+  toast('🎉 '+frog.emoji+' '+frog.name+' bought!'+(newMult>1?' ×'+newMult+' active!':''));
+  spawnFx(frog.emoji,12);
+
+  if(typeof renderDashboardFrogs==='function')renderDashboardFrogs();
 }
 
 // ═══════════════════════════════════════
@@ -2609,12 +2889,22 @@ function renderAdminPlayers(players){
     card.className='player-card';
     card.id='pcard_'+acc.id;
     const isCurrent=acc.id===playerId;
+    const owned=acc.ownedFrogs||[0];
+    const equippedId=acc.equippedFrog||0;
+    const ownedCount=owned.length;
+
+    // Build equipped frog dropdown options
+    const equippedOptions=owned.map(id=>{
+      const f=FROG_STORE_CHARS[id];
+      return `<option value="${id}" ${id===equippedId?'selected':''}>${f?f.emoji+' '+f.name:'Frog #'+id}</option>`;
+    }).join('');
+
     card.innerHTML=`
       <div class="player-card-header" onclick="togglePlayerEdit('${acc.id}')">
         <div>
           <div class="player-card-name">${acc.avatar||'🐸'} ${escHtml(acc.name||'Unknown')} ${isCurrent?'<span class="admin-badge">YOU</span>':''}</div>
           <div class="player-card-meta">${acc.email?'📧 '+escHtml(acc.email):''}${acc.phone?' 📱 '+escHtml(acc.phone):''}</div>
-          <div class="player-card-id">ID: ${acc.id}</div>
+          <div class="player-card-id">ID: ${acc.id} · 🐸 ${ownedCount} frog${ownedCount!==1?'s':''} owned</div>
         </div>
         <div style="text-align:right;flex-shrink:0">
           <div style="font-family:'Orbitron',monospace;font-size:.8rem;color:#f7931a;font-weight:900">${(acc.cryptoBalance||0).toFixed(4)}₿</div>
@@ -2623,6 +2913,7 @@ function renderAdminPlayers(players){
         </div>
       </div>
       <div class="player-edit-panel" id="pedit_${acc.id}">
+        <!-- Basic info fields -->
         <div class="edit-row">
           <span class="edit-label">Display Name</span>
           <input class="edit-input" id="ef_name_${acc.id}" value="${escHtml(acc.name||'')}" placeholder="Player name">
@@ -2651,13 +2942,99 @@ function renderAdminPlayers(players){
           <span class="edit-label">New Password</span>
           <input class="edit-input" id="ef_pass_${acc.id}" type="password" placeholder="Leave blank to keep current">
         </div>
-        <div class="edit-actions">
-          <button class="btn-admin-save" onclick="savePlayerEdit('${acc.id}')">💾 SAVE CHANGES</button>
+
+        <!-- Frog Collection Section -->
+        <div class="admin-frogs-section">
+          <div class="admin-frogs-title">🐸 Frog Collection (tap to toggle owned)</div>
+          <div class="admin-frog-legend">
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#00e676"></span> Owned</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#f7931a"></span> Equipped</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;border:1px solid rgba(255,255,255,.2)"></span> Not owned</span>
+          </div>
+          <div class="admin-frog-grid" id="afgrid_${acc.id}"></div>
+          <div class="admin-equipped-selector">
+            <label>🎯 Equipped Frog (active in game)</label>
+            <select id="ef_equipped_${acc.id}">${equippedOptions}</select>
+          </div>
+        </div>
+
+        <div class="edit-actions" style="margin-top:12px">
+          <button class="btn-admin-save" onclick="savePlayerEdit('${acc.id}')">💾 SAVE ALL CHANGES</button>
           <button class="btn-admin-del" onclick="deletePlayer('${acc.id}','${escHtml(acc.name||'')}')">🗑 DELETE</button>
         </div>
       </div>`;
     list.appendChild(card);
+
+    // Render frog grid for this player
+    renderAdminFrogGrid(acc);
   });
+}
+
+function renderAdminFrogGrid(acc){
+  const grid=document.getElementById('afgrid_'+acc.id);
+  if(!grid)return;
+  grid.innerHTML='';
+  const owned=acc.ownedFrogs||[0];
+  const equippedId=acc.equippedFrog||0;
+
+  FROG_STORE_CHARS.forEach(frog=>{
+    const isOwned=owned.includes(frog.id);
+    const isEquipped=frog.id===equippedId;
+    const price=getFrogPrice(frog.id);
+    const tile=document.createElement('div');
+    tile.className='admin-frog-tile'+(isEquipped?' equipped-frog':isOwned?' owned':'');
+    tile.title=(isOwned?'✅ Owned':'❌ Not owned')+' · '+frog.name+(price>0?' ('+price+'₿)':' (FREE)');
+    tile.innerHTML=`
+      ${isOwned?'<div class="admin-frog-owned-dot"></div>':''}
+      ${isEquipped?'<div class="admin-frog-equipped-dot">EQ</div>':''}
+      <span class="admin-frog-tile-emoji">${frog.emoji}</span>
+      <div class="admin-frog-tile-name">${frog.name}</div>
+      <div class="admin-frog-tile-price">${price>0?price+'₿':'FREE'}</div>`;
+    tile.onclick=()=>adminToggleFrog(acc.id,frog.id);
+    grid.appendChild(tile);
+  });
+}
+
+function adminToggleFrog(accId, frogId){
+  const acc=adminPlayers.find(a=>a.id===accId);
+  if(!acc)return;
+  if(!acc.ownedFrogs)acc.ownedFrogs=[0];
+
+  const idx=acc.ownedFrogs.indexOf(frogId);
+  if(frogId===0){toast('Classic Frog cannot be removed!');return;}
+
+  if(idx>=0){
+    // Remove frog
+    acc.ownedFrogs.splice(idx,1);
+    // If it was equipped, reset to classic
+    if(acc.equippedFrog===frogId){
+      acc.equippedFrog=0;
+      // Update dropdown
+      const sel=document.getElementById('ef_equipped_'+accId);
+      if(sel)sel.value='0';
+    }
+    toast('🐸 '+FROG_STORE_CHARS[frogId].name+' removed from collection');
+  } else {
+    // Add frog
+    acc.ownedFrogs.push(frogId);
+    toast('✅ '+FROG_STORE_CHARS[frogId].name+' added to collection');
+  }
+
+  // Re-sort owned frogs
+  acc.ownedFrogs.sort((a,b)=>a-b);
+
+  // Refresh the frog grid
+  renderAdminFrogGrid(acc);
+
+  // Rebuild the equipped dropdown with new owned list
+  const sel=document.getElementById('ef_equipped_'+accId);
+  if(sel){
+    const currentVal=sel.value;
+    sel.innerHTML=acc.ownedFrogs.map(id=>{
+      const f=FROG_STORE_CHARS[id];
+      return `<option value="${id}" ${String(id)===String(currentVal)?'selected':''}>${f?f.emoji+' '+f.name:'Frog #'+id}</option>`;
+    }).join('');
+  }
 }
 
 function togglePlayerEdit(id){
@@ -2683,6 +3060,13 @@ async function savePlayerEdit(id){
 
   if(!name||name.length<1){toast('❌ Name cannot be empty');return;}
 
+  // Read frog data from the admin grid state (use adminPlayers live copy)
+  const liveAcc=adminPlayers.find(a=>a.id===id)||acc;
+  const equippedFrogVal=parseInt(document.getElementById('ef_equipped_'+id)?.value||'0');
+  const updatedOwned=liveAcc.ownedFrogs||[0];
+  // Make sure equipped frog is in owned list
+  if(!updatedOwned.includes(equippedFrogVal))updatedOwned.unshift(equippedFrogVal);
+
   const updated={
     ...acc,
     name:name,
@@ -2692,6 +3076,8 @@ async function savePlayerEdit(id){
     cryptoEarned:Math.max(acc.cryptoEarned||0,crypto),
     bestScore:score,
     maxLevel:level,
+    ownedFrogs:updatedOwned,
+    equippedFrog:equippedFrogVal,
   };
   if(newPass&&newPass.length>=6){
     updated.passHash=hashPass(newPass);
@@ -2712,8 +3098,11 @@ async function savePlayerEdit(id){
     PD.cryptoBalance=updated.cryptoBalance;
     PD.cryptoEarned=updated.cryptoEarned;
     PD.name=name;
+    PD.ownedFrogs=updated.ownedFrogs;
+    PD.equippedFrog=updated.equippedFrog;
     currentAccount=updated;
     updateStart();
+    if(typeof renderDashboardFrogs==='function')renderDashboardFrogs();
   }
 
   toast('✅ '+name+' updated!');
