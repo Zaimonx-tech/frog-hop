@@ -351,6 +351,117 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   margin-bottom:14px;
 }
 
+
+/* ═══════════════════════════════
+   ADMIN DASHBOARD
+═══════════════════════════════ */
+#adminLoginScreen{
+  background:radial-gradient(ellipse at 50% 30%,#1a0000 0%,#030712 70%);
+}
+.admin-login-card{
+  background:rgba(255,0,0,.05);border:1.5px solid rgba(255,50,50,.25);
+  border-radius:20px;padding:32px 28px;width:100%;max-width:360px;
+  backdrop-filter:blur(20px);
+}
+.admin-logo{
+  font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;
+  color:#ff4444;text-align:center;margin-bottom:4px;letter-spacing:3px;
+}
+.admin-sub{font-size:.68rem;color:rgba(255,100,100,.5);text-align:center;
+  letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;}
+.admin-err{background:rgba(255,23,68,.12);border:1px solid rgba(255,23,68,.3);
+  border-radius:10px;padding:10px 14px;margin-bottom:14px;
+  color:#ff6b6b;font-size:.82rem;font-weight:700;display:none;}
+.admin-err.show{display:block;}
+
+#adminScreen{
+  background:radial-gradient(ellipse at 50% 10%,#150000 0%,#030712 60%);
+  overflow-y:auto;padding:0;align-items:stretch;justify-content:flex-start;
+}
+.admin-header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(0,0,0,.9);backdrop-filter:blur(14px);
+  border-bottom:2px solid rgba(255,50,50,.3);
+  padding:12px 18px;display:flex;align-items:center;justify-content:space-between;
+}
+.admin-title{
+  font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;
+  color:#ff4444;letter-spacing:2px;
+}
+.admin-body{padding:16px;flex:1;}
+.admin-section-title{
+  font-family:'Orbitron',monospace;font-size:.7rem;letter-spacing:3px;
+  color:rgba(255,80,80,.6);text-transform:uppercase;margin:16px 0 10px;font-weight:700;
+}
+.admin-stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;
+}
+.admin-stat-box{
+  background:rgba(255,50,50,.06);border:1px solid rgba(255,50,50,.18);
+  border-radius:12px;padding:12px;text-align:center;
+}
+.admin-stat-val{font-family:'Orbitron',monospace;font-size:1.3rem;color:#ff6666;font-weight:900;}
+.admin-stat-lbl{font-size:.62rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;}
+
+.admin-search{
+  width:100%;padding:11px 14px;background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(255,50,50,.2);border-radius:10px;
+  color:#fff;font-family:'Exo 2',sans-serif;font-size:.9rem;
+  outline:none;margin-bottom:12px;
+}
+.admin-search:focus{border-color:rgba(255,50,50,.5);background:rgba(255,50,50,.05);}
+.admin-search::placeholder{color:rgba(255,255,255,.25);}
+
+.player-card{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:14px;margin-bottom:10px;
+  transition:border-color .2s;
+}
+.player-card:hover{border-color:rgba(255,50,50,.3);}
+.player-card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;cursor:pointer;
+}
+.player-card-name{font-family:'Orbitron',monospace;font-size:.9rem;font-weight:900;color:#fff;}
+.player-card-id{font-size:.62rem;color:rgba(255,255,255,.3);font-family:'Orbitron',monospace;}
+.player-card-meta{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:2px;}
+.player-edit-panel{display:none;border-top:1px solid rgba(255,255,255,.07);padding-top:12px;margin-top:4px;}
+.player-edit-panel.open{display:block;}
+.edit-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.edit-label{font-size:.7rem;color:rgba(255,255,255,.5);font-family:'Orbitron',monospace;
+  min-width:110px;font-weight:700;letter-spacing:.5px;}
+.edit-input{
+  flex:1;padding:8px 10px;background:rgba(255,255,255,.06);
+  border:1.5px solid rgba(255,255,255,.12);border-radius:8px;
+  color:#fff;font-family:'Exo 2',sans-serif;font-size:.85rem;outline:none;
+  transition:border-color .2s;
+}
+.edit-input:focus{border-color:rgba(255,50,50,.5);background:rgba(255,50,50,.04);}
+.edit-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.btn-admin-save{
+  flex:1;padding:9px;font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;
+  letter-spacing:1px;border:none;border-radius:8px;cursor:pointer;
+  background:linear-gradient(135deg,#ff4444,#cc0000);color:#fff;
+  box-shadow:0 3px 12px rgba(255,50,50,.35);transition:all .18s;
+}
+.btn-admin-save:active{transform:scale(.96);}
+.btn-admin-del{
+  padding:9px 14px;font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;
+  border:1.5px solid rgba(255,50,50,.3);border-radius:8px;cursor:pointer;
+  background:rgba(255,50,50,.08);color:#ff6666;transition:all .18s;
+}
+.btn-admin-del:active{background:rgba(255,50,50,.25);}
+.btn-admin-logout{
+  background:rgba(255,50,50,.1);border:1px solid rgba(255,50,50,.3);
+  color:#ff6666;font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;
+  padding:7px 14px;border-radius:8px;cursor:pointer;letter-spacing:1px;
+}
+.admin-badge{
+  font-size:.58rem;font-family:'Orbitron',monospace;font-weight:900;
+  background:rgba(255,50,50,.2);color:#ff6666;border:1px solid rgba(255,50,50,.4);
+  border-radius:6px;padding:1px 6px;letter-spacing:.5px;
+}
+
 /* loading spinner */
 .spinner{
   width:36px;height:36px;border:3px solid rgba(247,147,26,.2);
@@ -686,6 +797,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   <button class="btn btn-secondary" onclick="openStore()">🐸 Frog Store</button>
   <button class="btn btn-secondary" onclick="showScreen('dashboardScreen');renderDashboard()">👤 My Dashboard</button>
   <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 Leaderboard</button>
+  <div onclick="adminTapCount()" style="color:rgba(255,255,255,.08);font-size:.55rem;margin-top:8px;cursor:pointer;font-family:'Orbitron',monospace;letter-spacing:2px;user-select:none">⚙</div>
 </div>
 
 <!-- ══ GAME ══ -->
@@ -765,6 +877,55 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   </div>
   <div class="store-grid" id="storeGrid"></div>
   <button class="btn btn-secondary" style="margin:12px auto;display:block" onclick="closeStore()">← BACK</button>
+</div>
+
+<!-- ══ ADMIN LOGIN ══ -->
+<div id="adminLoginScreen" class="screen hidden">
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="font-size:3rem;margin-bottom:8px;">🔐</div>
+    <div class="admin-logo">ADMIN PANEL</div>
+    <div class="admin-sub">⚠️ Restricted Access ⚠️</div>
+  </div>
+  <div class="admin-login-card">
+    <div class="admin-err" id="adminLoginErr"></div>
+    <div class="input-group">
+      <label class="input-label" style="color:rgba(255,80,80,.7)">Admin Password</label>
+      <div class="input-wrap">
+        <span class="input-icon">🔑</span>
+        <input class="auth-input" id="adminPassInput" type="password" placeholder="Enter admin password"
+          onkeydown="if(event.key==='Enter')doAdminLogin()">
+        <button class="pass-toggle" onclick="togglePass('adminPassInput',this)" tabindex="-1">👁</button>
+      </div>
+    </div>
+    <button class="btn-auth" style="background:linear-gradient(135deg,#ff4444,#cc0000);margin-top:4px" onclick="doAdminLogin()">🔐 ENTER ADMIN</button>
+    <button class="btn-auth-outline" style="margin-top:10px" onclick="showScreen('authScreen')">← Back to Game</button>
+  </div>
+</div>
+
+<!-- ══ ADMIN DASHBOARD ══ -->
+<div id="adminScreen" class="screen hidden">
+  <div class="admin-header">
+    <div>
+      <div class="admin-title">🛡 ADMIN PANEL</div>
+      <div style="font-size:.6rem;color:rgba(255,100,100,.5);font-family:'Orbitron',monospace;letter-spacing:2px;">FROG HOP CRYPTO</div>
+    </div>
+    <button class="btn-admin-logout" onclick="doAdminLogout()">LOGOUT 🔒</button>
+  </div>
+  <div class="admin-body">
+    <!-- Stats overview -->
+    <div class="admin-section-title">📊 SYSTEM OVERVIEW</div>
+    <div class="admin-stats-row">
+      <div class="admin-stat-box"><div class="admin-stat-val" id="adm_totalPlayers">0</div><div class="admin-stat-lbl">Players</div></div>
+      <div class="admin-stat-box"><div class="admin-stat-val" id="adm_totalCrypto">0</div><div class="admin-stat-lbl">Total ₿</div></div>
+      <div class="admin-stat-box"><div class="admin-stat-val" id="adm_topScore">0</div><div class="admin-stat-lbl">Top Score</div></div>
+    </div>
+
+    <!-- Player Management -->
+    <div class="admin-section-title">👥 PLAYER MANAGEMENT</div>
+    <input class="admin-search" id="adminSearch" type="text" placeholder="🔍 Search by name, email or phone..."
+      oninput="filterAdminPlayers()">
+    <div id="adminPlayerList"></div>
+  </div>
 </div>
 
 <!-- ══ LEADERBOARD ══ -->
@@ -1808,9 +1969,17 @@ function goMenu(){
 }
 
 // ═══════════════ SCREENS ═══════════════
+let _adminTaps=0,_adminTapTimer=null;
+function adminTapCount(){
+  _adminTaps++;
+  clearTimeout(_adminTapTimer);
+  if(_adminTaps>=5){_adminTaps=0;openAdminLogin();return;}
+  _adminTapTimer=setTimeout(()=>{_adminTaps=0;},2000);
+}
+
 function showScreen(id){
   document.querySelectorAll('.screen,.overlay-screen').forEach(s=>s.classList.add('hidden'));
-  if(id==='startScreen'||id==='leaderboardScreen'||id==='authScreen'||id==='dashboardScreen'){
+  if(id==='startScreen'||id==='leaderboardScreen'||id==='authScreen'||id==='dashboardScreen'||id==='adminLoginScreen'||id==='adminScreen'){
     if(animId){cancelAnimationFrame(animId);animId=null;}
   }
   document.getElementById(id)?.classList.remove('hidden');
@@ -2356,6 +2525,216 @@ function handleFrogCardClick(frog,price,isOwned,isEquipped){
   const multMsg=newMult>1?' Score ×'+newMult+' active!':'';
   toast('🎉 Bought & equipped '+frog.name+'!'+multMsg);
   spawnFx(frog.emoji,10);
+}
+
+// ═══════════════════════════════════════
+
+
+// ═══════════════════════════════════════
+//  ADMIN DASHBOARD
+// ═══════════════════════════════════════
+const ADMIN_PASS_HASH='adm_frogcrypto_2024'; // hashed in check below
+let adminPlayers=[];
+
+// Hardened password check using the same hashPass function
+// Admin password: FrogAdmin@2024 (change this to your preferred password)
+const ADMIN_SECRET=hashPass('FrogAdmin@2024');
+
+function doAdminLogin(){
+  const pass=document.getElementById('adminPassInput').value;
+  const errEl=document.getElementById('adminLoginErr');
+  errEl.classList.remove('show');
+  if(!pass){errEl.textContent='⚠️ Enter the admin password';errEl.classList.add('show');return;}
+  if(hashPass(pass)!==ADMIN_SECRET){
+    errEl.textContent='❌ Incorrect password. Access denied.';errEl.classList.add('show');
+    document.getElementById('adminPassInput').value='';
+    // Brief delay to prevent brute force
+    setTimeout(()=>errEl.classList.remove('show'),3000);
+    return;
+  }
+  document.getElementById('adminPassInput').value='';
+  localStorage.setItem('fhc_admin_session','1');
+  showScreen('adminScreen');
+  loadAdminDashboard();
+}
+
+function doAdminLogout(){
+  localStorage.removeItem('fhc_admin_session');
+  showScreen('authScreen');
+}
+
+function openAdminLogin(){
+  // Check existing session
+  if(localStorage.getItem('fhc_admin_session')==='1'){
+    showScreen('adminScreen');
+    loadAdminDashboard();
+    return;
+  }
+  showScreen('adminLoginScreen');
+}
+
+async function loadAdminDashboard(){
+  const accounts=await dbA('accounts');
+  adminPlayers=accounts;
+
+  // Overview stats
+  document.getElementById('adm_totalPlayers').textContent=accounts.length;
+  const totalCrypto=accounts.reduce((s,a)=>s+(a.cryptoBalance||0),0);
+  document.getElementById('adm_totalCrypto').textContent=totalCrypto.toFixed(2)+'₿';
+  const topScore=Math.max(0,...accounts.map(a=>a.bestScore||0));
+  document.getElementById('adm_topScore').textContent=topScore.toLocaleString();
+
+  renderAdminPlayers(accounts);
+}
+
+function filterAdminPlayers(){
+  const q=document.getElementById('adminSearch').value.toLowerCase().trim();
+  const filtered=q?adminPlayers.filter(a=>
+    (a.name||'').toLowerCase().includes(q)||
+    (a.email||'').toLowerCase().includes(q)||
+    (a.phone||'').includes(q)
+  ):adminPlayers;
+  renderAdminPlayers(filtered);
+}
+
+function renderAdminPlayers(players){
+  const list=document.getElementById('adminPlayerList');
+  list.innerHTML='';
+  if(!players.length){
+    list.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.3);font-family:Orbitron,monospace;font-size:.8rem;padding:30px">No players found</div>';
+    return;
+  }
+  players.forEach(acc=>{
+    const card=document.createElement('div');
+    card.className='player-card';
+    card.id='pcard_'+acc.id;
+    const isCurrent=acc.id===playerId;
+    card.innerHTML=`
+      <div class="player-card-header" onclick="togglePlayerEdit('${acc.id}')">
+        <div>
+          <div class="player-card-name">${acc.avatar||'🐸'} ${escHtml(acc.name||'Unknown')} ${isCurrent?'<span class="admin-badge">YOU</span>':''}</div>
+          <div class="player-card-meta">${acc.email?'📧 '+escHtml(acc.email):''}${acc.phone?' 📱 '+escHtml(acc.phone):''}</div>
+          <div class="player-card-id">ID: ${acc.id}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-family:'Orbitron',monospace;font-size:.8rem;color:#f7931a;font-weight:900">${(acc.cryptoBalance||0).toFixed(4)}₿</div>
+          <div style="font-size:.65rem;color:rgba(255,255,255,.4)">Score: ${(acc.bestScore||0).toLocaleString()}</div>
+          <div style="font-size:.65rem;color:rgba(255,255,255,.4)">Lv.${acc.maxLevel||1}</div>
+        </div>
+      </div>
+      <div class="player-edit-panel" id="pedit_${acc.id}">
+        <div class="edit-row">
+          <span class="edit-label">Display Name</span>
+          <input class="edit-input" id="ef_name_${acc.id}" value="${escHtml(acc.name||'')}" placeholder="Player name">
+        </div>
+        <div class="edit-row">
+          <span class="edit-label">Email</span>
+          <input class="edit-input" id="ef_email_${acc.id}" value="${escHtml(acc.email||'')}" placeholder="email@example.com">
+        </div>
+        <div class="edit-row">
+          <span class="edit-label">Phone</span>
+          <input class="edit-input" id="ef_phone_${acc.id}" value="${escHtml(acc.phone||'')}" placeholder="+1 555 000 0000">
+        </div>
+        <div class="edit-row">
+          <span class="edit-label">Crypto Balance ₿</span>
+          <input class="edit-input" id="ef_crypto_${acc.id}" type="number" step="0.0001" min="0" value="${(acc.cryptoBalance||0).toFixed(4)}" placeholder="0.0000">
+        </div>
+        <div class="edit-row">
+          <span class="edit-label">Best Score</span>
+          <input class="edit-input" id="ef_score_${acc.id}" type="number" min="0" value="${acc.bestScore||0}" placeholder="0">
+        </div>
+        <div class="edit-row">
+          <span class="edit-label">Max Level</span>
+          <input class="edit-input" id="ef_level_${acc.id}" type="number" min="1" max="100" value="${acc.maxLevel||1}" placeholder="1">
+        </div>
+        <div class="edit-row">
+          <span class="edit-label">New Password</span>
+          <input class="edit-input" id="ef_pass_${acc.id}" type="password" placeholder="Leave blank to keep current">
+        </div>
+        <div class="edit-actions">
+          <button class="btn-admin-save" onclick="savePlayerEdit('${acc.id}')">💾 SAVE CHANGES</button>
+          <button class="btn-admin-del" onclick="deletePlayer('${acc.id}','${escHtml(acc.name||'')}')">🗑 DELETE</button>
+        </div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function togglePlayerEdit(id){
+  const panel=document.getElementById('pedit_'+id);
+  if(panel)panel.classList.toggle('open');
+}
+
+function escHtml(str){
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function savePlayerEdit(id){
+  const acc=adminPlayers.find(a=>a.id===id);
+  if(!acc){toast('❌ Player not found');return;}
+
+  const name=document.getElementById('ef_name_'+id)?.value.trim();
+  const email=document.getElementById('ef_email_'+id)?.value.trim().toLowerCase();
+  const phone=document.getElementById('ef_phone_'+id)?.value.trim();
+  const crypto=parseFloat(document.getElementById('ef_crypto_'+id)?.value)||0;
+  const score=parseInt(document.getElementById('ef_score_'+id)?.value)||0;
+  const level=Math.min(100,Math.max(1,parseInt(document.getElementById('ef_level_'+id)?.value)||1));
+  const newPass=document.getElementById('ef_pass_'+id)?.value;
+
+  if(!name||name.length<1){toast('❌ Name cannot be empty');return;}
+
+  const updated={
+    ...acc,
+    name:name,
+    email:email||acc.email,
+    phone:phone||acc.phone,
+    cryptoBalance:parseFloat(crypto.toFixed(6)),
+    cryptoEarned:Math.max(acc.cryptoEarned||0,crypto),
+    bestScore:score,
+    maxLevel:level,
+  };
+  if(newPass&&newPass.length>=6){
+    updated.passHash=hashPass(newPass);
+  } else if(newPass&&newPass.length>0&&newPass.length<6){
+    toast('❌ New password must be at least 6 characters');return;
+  }
+
+  await saveAccount(updated);
+
+  // Update local adminPlayers array
+  const idx=adminPlayers.findIndex(a=>a.id===id);
+  if(idx>=0)adminPlayers[idx]=updated;
+
+  // If editing current logged-in player, sync PD
+  if(id===playerId){
+    PD.bestScore=score;
+    PD.maxLevel=level;
+    PD.cryptoBalance=updated.cryptoBalance;
+    PD.cryptoEarned=updated.cryptoEarned;
+    PD.name=name;
+    currentAccount=updated;
+    updateStart();
+  }
+
+  toast('✅ '+name+' updated!');
+  // Re-render that card area
+  loadAdminDashboard();
+}
+
+async function deletePlayer(id,name){
+  if(!confirm('⚠️ Delete account for '+name+'?\nThis cannot be undone!'))return;
+  // Remove from IndexedDB accounts store
+  if(db){
+    await new Promise(res=>{
+      const tx=db.transaction('accounts','readwrite');
+      tx.objectStore('accounts').delete(id);
+      tx.oncomplete=res;tx.onerror=res;
+    });
+  } else {
+    localStorage.removeItem('acc_'+id);
+  }
+  toast('🗑 '+name+' deleted');
+  loadAdminDashboard();
 }
 
 // ═══════════════════════════════════════
