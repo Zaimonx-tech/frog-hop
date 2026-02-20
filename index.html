@@ -592,7 +592,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
       </div>
       <div class="dash-stat">
         <div class="dash-stat-val" id="ds_coins" style="color:#ffd700">0</div>
-        <div class="dash-stat-lbl">Crypto Earned</div>
+        <div class="dash-stat-lbl">Crypto Balance</div>
       </div>
       <div class="dash-stat">
         <div class="dash-stat-val" id="ds_combo" style="color:#a855f7">x1</div>
@@ -641,7 +641,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
         <div class="wallet-amount" id="w_gems">0</div>
       </div>
       <div class="wallet-row" style="border:none;padding-top:10px;margin-top:4px;border-top:1px solid rgba(247,147,26,.2);">
-        <span style="font-family:'Orbitron',monospace;font-size:.8rem;color:rgba(255,255,255,.5);">CRYPTO BALANCE</span>
+        <span style="font-family:'Orbitron',monospace;font-size:.8rem;color:rgba(255,255,255,.5);">TOTAL EARNED</span>
         <div class="wallet-amount" id="w_total" style="color:#00e676">0</div>
       </div>
     </div>
@@ -677,7 +677,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   <div class="stats-row" id="playerStats">
     <div class="stat-box"><div class="stat-val" id="statBest">0</div><div class="stat-lbl">Best Score</div></div>
     <div class="stat-box"><div class="stat-val" id="statLvl">1</div><div class="stat-lbl">Max Level</div></div>
-    <div class="stat-box"><div class="stat-val" id="statCoins">0</div><div class="stat-lbl">Crypto Earned</div></div>
+    <div class="stat-box"><div class="stat-val" id="statCoins">0</div><div class="stat-lbl">Crypto Balance</div></div>
     <div class="stat-box"><div class="stat-val" id="statDeaths">0</div><div class="stat-lbl">Deaths</div></div>
   </div>
 
@@ -693,6 +693,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
   <div id="hud">
     <div class="hud-item">🪙<span id="cryptoDisplay">0</span></div>
     <div class="hud-item">🎯<span id="levelDisplay">Lv.1</span></div>
+    <div class="hud-item" style="color:#ffd700;font-weight:900">🪙<span id="coinCounter" style="font-family:'Orbitron',monospace">0/0</span></div>
     <div class="hud-item">❤️<span id="livesDisplay">3</span></div>
     <div class="hud-item">🔥<span id="comboDisplay">x1</span></div>
     <canvas id="timerArc"></canvas>
@@ -736,6 +737,7 @@ body{background:var(--bg);font-family:'Exo 2',sans-serif;overflow:hidden;width:1
     <div class="sc-row"><span>Score</span><span id="d_score">0</span></div>
     <div class="sc-row"><span>Best Score</span><span id="d_best">0</span></div>
     <div class="sc-row"><span>Max Combo</span><span id="d_combo">x1</span></div>
+    <div class="sc-row" style="color:#ff6b6b;border:none;font-size:.78rem"><span>💸 Crypto Lost</span><span id="d_crypto_deduct">0₿</span></div>
   </div>
   <button class="btn btn-primary" onclick="restartLevel()">🔄 TRY AGAIN</button>
   <button class="btn btn-secondary" onclick="goMenu()">🏠 Menu</button>
@@ -792,7 +794,7 @@ async function savePD(){await dbP('players',PD);await dbP('lb',{id:playerId,name
 function updateStart(){
   document.getElementById('statBest').textContent=PD.bestScore.toLocaleString();
   document.getElementById('statLvl').textContent=PD.maxLevel;
-  document.getElementById('statCoins').textContent=PD.totalCoins.toLocaleString();
+  document.getElementById('statCoins').textContent=(PD.cryptoBalance||0).toFixed(4)+'₿';
   document.getElementById('statDeaths').textContent=PD.totalDeaths;
   document.getElementById('contLvl').textContent=PD.maxLevel;
 }
@@ -1033,6 +1035,14 @@ function generateLevel(lvl){
     'Watch for projectiles from off-screen!',
   ];
 
+  // Count total coins and gems on the level
+  let totalCoinsOnLevel=0;
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    const t=grid[r][c];
+    if(t.coin)totalCoinsOnLevel++;
+    if(t.gem)totalCoinsOnLevel++;
+  }
+
   return{
     grid,rows,cols,frogR:rows-1,frogC:startC,
     goalR:0,goalC,
@@ -1044,6 +1054,7 @@ function generateLevel(lvl){
     isBoss:lvl%10===0,
     hint:hints[Math.floor(Math.random()*hints.length)],
     startC,goalC,
+    totalCoins:totalCoinsOnLevel,
   };
 }
 
@@ -1072,9 +1083,10 @@ function initLevel(lvl){
   document.getElementById('levelDisplay').textContent='Lv.'+lvl;
   document.getElementById('livesDisplay').textContent=GS.lives;
   document.getElementById('comboDisplay').textContent='x1';
+  document.getElementById('coinCounter').textContent='0/'+GS.totalCoins;
   const hudMult=getEquippedMultiplier();
-  document.getElementById('cryptoDisplay').textContent=(PD.cryptoEarned||0).toFixed(4)+'₿'+(hudMult>1?' ×'+hudMult:'');
-  document.getElementById('hintBar').textContent='💡 '+GS.hint;
+  document.getElementById('cryptoDisplay').textContent=(PD.cryptoBalance||0).toFixed(4)+'₿'+(hudMult>1?' ×'+hudMult:'');
+  document.getElementById('hintBar').textContent='⚠️ Collect ALL '+GS.totalCoins+' coin'+(GS.totalCoins!==1?'s':'')+'  to pass! Missing any = 90% score & crypto penalty!';
   document.getElementById('levelProgBar').style.width=(((lvl-1)/100)*100)+'%';
   document.getElementById('dangerVig').classList.remove('on');
   updateTimerHUD();
@@ -1214,6 +1226,7 @@ function land(){
     trackCoinInWallet(tile.gemType?.label||'GEM');
     spawnCoinAnim(nc,nr,'💎 +'+val,tile.gemType.glow);
     incCombo();spawnFx('💎',8);
+    updateCoinCounter();
   } else if(tile.coin){
     tile.coin=false;
     const baseVal=15+GS.level;
@@ -1222,6 +1235,7 @@ function land(){
     trackCoinInWallet(tile.coinType?.label||'BTC');
     spawnCoinAnim(nc,nr,tile.coinType.label+' +'+val,tile.coinType.glow);
     incCombo();
+    updateCoinCounter();
   } else {
     if(currentCombo>1){currentCombo=Math.max(1,currentCombo-1);document.getElementById('comboDisplay').textContent='x'+currentCombo;}
   }
@@ -1268,11 +1282,34 @@ function showDeathScrn(){
   const tot=currentScore+GS.score;
   if(tot>PD.bestScore)PD.bestScore=tot;
   if(maxCombo>PD.maxCombo)PD.maxCombo=maxCombo;
+
+  // Deduct current game score from crypto balance
+  const scoreLostAsCrypto=tot/100000;
+  const oldBalance=PD.cryptoBalance||0;
+  const newBalance=Math.max(0,parseFloat((oldBalance-scoreLostAsCrypto).toFixed(6)));
+  PD.cryptoBalance=newBalance;
+
   savePD();
+
+  // Update live displays
+  const frogMult=getEquippedMultiplier();
+  document.getElementById('cryptoDisplay').textContent=newBalance.toFixed(4)+'₿'+(frogMult>1?' ×'+frogMult:'');
+  document.getElementById('statBest').textContent=PD.bestScore.toLocaleString();
+  document.getElementById('statCoins').textContent=newBalance.toFixed(4)+'₿';
+  const dsScore=document.getElementById('ds_score');if(dsScore)dsScore.textContent=PD.bestScore.toLocaleString();
+  const dsCoins=document.getElementById('ds_coins');if(dsCoins)dsCoins.textContent=newBalance.toFixed(4)+'₿';
+  const wTotal=document.getElementById('w_total');if(wTotal)wTotal.textContent=(PD.cryptoEarned||0).toFixed(4)+'₿';
+  const storeBalEl=document.getElementById('storeBalance');if(storeBalEl)storeBalEl.textContent=newBalance.toFixed(4);
+
   document.getElementById('d_lvl').textContent=GS.level;
   document.getElementById('d_score').textContent=tot.toLocaleString();
   document.getElementById('d_best').textContent=PD.bestScore.toLocaleString();
   document.getElementById('d_combo').textContent='x'+maxCombo;
+  // Show crypto deduction on death screen
+  const cryptoDeductEl=document.getElementById('d_crypto_deduct');
+  if(cryptoDeductEl){
+    cryptoDeductEl.textContent='-'+scoreLostAsCrypto.toFixed(4)+'₿  →  '+newBalance.toFixed(4)+'₿ remaining';
+  }
   document.getElementById('deathScreen').classList.remove('hidden');
 }
 
@@ -1283,8 +1320,77 @@ function restartLevel(){
   initLevel(GS.level);
 }
 
+function updateCoinCounter(){
+  const collected=GS.coinsCol;
+  const total=GS.totalCoins;
+  const el=document.getElementById('coinCounter');
+  if(el){
+    el.textContent=collected+'/'+total;
+    // Turn red if close to goal but missing coins
+    el.style.color=collected>=total?'#00e676':collected>total*0.7?'#f7931a':'#ffd700';
+  }
+}
+
+function failLevel(){
+  // 90% penalty: reduce bestScore by 90%, then derive cryptoBalance from new bestScore
+  timerPaused=true;
+  cancelAnimationFrame(animId);animId=null;
+
+  const oldBest=PD.bestScore;
+  const oldBalance=PD.cryptoBalance||0;
+
+  // New best score = 10% of old
+  const newBest=Math.floor(oldBest*0.1);
+  PD.bestScore=newBest;
+
+  // Crypto balance derived from remaining best score: bestScore / 100000
+  const newBalance=parseFloat((newBest/100000).toFixed(6));
+  PD.cryptoBalance=newBalance;
+  PD.cryptoEarned=Math.max(PD.cryptoEarned||0, newBalance);
+
+  savePD();
+
+  // Update ALL live displays immediately
+  const frogMult=getEquippedMultiplier();
+  document.getElementById('cryptoDisplay').textContent=newBalance.toFixed(4)+'₿'+(frogMult>1?' ×'+frogMult:'');
+  document.getElementById('statBest').textContent=newBest.toLocaleString();
+  // Update dashboard if it was rendered
+  const dsScore=document.getElementById('ds_score');
+  if(dsScore)dsScore.textContent=newBest.toLocaleString();
+  const dsCoins=document.getElementById('ds_coins');
+  if(dsCoins)dsCoins.textContent=newBalance.toFixed(4)+'₿';
+  const wTotal=document.getElementById('w_total');
+  if(wTotal)wTotal.textContent=(PD.cryptoEarned||0).toFixed(4)+'₿';
+  const storeBalEl=document.getElementById('storeBalance');
+  if(storeBalEl)storeBalEl.textContent=newBalance.toFixed(4);
+
+  // Show fail overlay
+  const missed=GS.totalCoins-GS.coinsCol;
+  const fo=document.createElement('div');
+  fo.className='overlay-screen';fo.id='failCoinScreen';
+  fo.innerHTML=`
+    <div class="ov-emoji">💸</div>
+    <div class="ov-title" style="color:#ff1744">COINS MISSED!</div>
+    <p style="color:rgba(255,255,255,.7);text-align:center;font-family:'Orbitron',monospace;font-size:.8rem;margin-bottom:16px;line-height:1.7">
+      You reached the goal but missed<br>
+      <span style="color:#ff1744;font-size:1.4rem;font-weight:900">${missed} COIN${missed!==1?'S':''}</span><br>
+      You must collect ALL coins to pass!
+    </p>
+    <div class="score-card" style="min-width:260px">
+      <div class="sc-row"><span>Coins Collected</span><span style="color:#f7931a">${GS.coinsCol} / ${GS.totalCoins}</span></div>
+      <div class="sc-row"><span>Best Score</span><span style="color:#ff1744">${oldBest.toLocaleString()} → <b>${newBest.toLocaleString()}</b> (-90%)</span></div>
+      <div class="sc-row" style="border:none"><span>Crypto Balance</span><span style="color:#ff1744">${oldBalance.toFixed(4)}₿ → <b>${newBalance.toFixed(4)}₿</b></span></div>
+    </div>
+    <button class="btn btn-primary" style="background:linear-gradient(135deg,#ff1744,#c0000d)" onclick="document.getElementById('failCoinScreen').remove();restartLevel()">🔄 TRY AGAIN</button>
+    <button class="btn btn-secondary" onclick="document.getElementById('failCoinScreen').remove();goMenu()">🏠 Menu</button>`;
+  document.body.appendChild(fo);
+  screenShake();spawnFx('💸',16);
+}
+
 function completeLevel(){
   timerPaused=true;
+  // Check all coins collected
+  if(GS.coinsCol<GS.totalCoins){failLevel();return;}
   const lvl=GS.level;
   const timeBonus=Math.floor(levelTimer*120);
   const comboBonus=Math.floor(GS.score*(Math.max(0,maxCombo-1)*0.6));
@@ -1305,7 +1411,7 @@ function completeLevel(){
   const newCrypto=multipliedTotal/100000;
   PD.cryptoEarned=(PD.cryptoEarned||0)+newCrypto;
   PD.cryptoBalance=(PD.cryptoBalance||0)+newCrypto;
-  document.getElementById('cryptoDisplay').textContent=(PD.cryptoEarned||0).toFixed(4)+'₿'+(frogMult>1?' ×'+frogMult:'');
+  document.getElementById('cryptoDisplay').textContent=(PD.cryptoBalance||0).toFixed(4)+'₿'+(frogMult>1?' ×'+frogMult:'');
   savePD();
 
   if(lvl>=100){document.getElementById('win_score').textContent=currentScore.toLocaleString();document.getElementById('winScreen').classList.remove('hidden');spawnFx('🏆',25);return;}
@@ -2059,7 +2165,7 @@ function renderDashboard(){
   // Stats
   document.getElementById('ds_score').textContent=(p.bestScore||0).toLocaleString();
   document.getElementById('ds_level').textContent=p.maxLevel||1;
-  document.getElementById('ds_coins').textContent=(p.cryptoEarned||0).toFixed(4)+'₿';
+  document.getElementById('ds_coins').textContent=(p.cryptoBalance||0).toFixed(4)+'₿';
   document.getElementById('ds_combo').textContent='x'+(p.maxCombo||1);
   document.getElementById('ds_deaths').textContent=p.totalDeaths||0;
   document.getElementById('ds_games').textContent=p.gamesPlayed||0;
@@ -2078,7 +2184,7 @@ function renderDashboard(){
   document.getElementById('w_sol').textContent=(w.sol||0).toLocaleString();
   document.getElementById('w_gems').textContent=(w.gems||0).toLocaleString();
   const total=(w.btc||0)*100+(w.eth||0)*50+(w.sol||0)*30+(w.gems||0)*200+(p.totalCoins||0);
-  document.getElementById('w_total').textContent=(p.cryptoBalance||0).toFixed(4)+'₿';
+  document.getElementById('w_total').textContent=(p.cryptoEarned||0).toFixed(4)+'₿';
 
   // Achievements
   const grid=document.getElementById('achievementsGrid');grid.innerHTML='';
